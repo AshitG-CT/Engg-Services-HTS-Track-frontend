@@ -254,10 +254,10 @@ export default function HTSTable() {
     })
   );
 
-  const [filterRecords, setFilterRecords] = useState([]);
+  const [filterRecords, setFilterRecords] = useState([] as Array<object>);
 
   useEffect(() => {
-    const filteredRecords = [];
+    const filteredRecords = [] as Array<object>;
     if (searchText) {
       records.forEach((record) => {
         const rowStr = `${record.id}${record.cell1}${record.cell2} ${record.cell3}${record.cell4}${record.cell5}`;
@@ -290,11 +290,10 @@ export default function HTSTable() {
 
   const getMaxPageNumber = (pageSizePar?: number) => {
     const div = String(
-      (filterRecords.length > 0 ? filterRecords : records).length /
-        (pageSizePar ?? pageSize)
+      (searchText ? filterRecords : records).length / (pageSizePar ?? pageSize)
     );
     const isFloat = div.includes(".");
-    return isFloat ? parseInt(div) + 1 : Number(div);
+    return isFloat ? parseInt(div) + 1 : Number(div) == 0 ? 1 : Number(div);
   };
 
   const getPaginationItems = () => {
@@ -403,8 +402,8 @@ export default function HTSTable() {
             </tr>
           </thead>
           <tbody>
-            {(filterRecords.length > 0 ? filterRecords : records)
-              .slice(activePage * pageSize - pageSize, activePage * pageSize) //
+            {(searchText ? filterRecords : records)
+              .slice(activePage * pageSize - pageSize, activePage * pageSize)
               .map((record, index) => {
                 return (
                   <tr key={index}>
@@ -417,6 +416,11 @@ export default function HTSTable() {
                   </tr>
                 );
               })}
+            {searchText && filterRecords.length == 0 && (
+              <tr>
+                <td colSpan={7}>No Record Found</td>
+              </tr>
+            )}
             <tr>
               <td colSpan={7}>
                 <div className={`${Style.pagination}`}>
