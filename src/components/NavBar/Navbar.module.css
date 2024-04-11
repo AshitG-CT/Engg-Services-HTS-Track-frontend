@@ -1,0 +1,21 @@
+.navbarBrandBg {
+  background: url("CITIUSTECH-Logo.webp");
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 40px;
+  width: 300px;
+}
+
+.navLink:hover {
+  background-color: rgb(47, 132, 212);
+  border-radius: 10%;
+}
+
+.navLinkUpgrade {
+  transition: none !important;
+}
+
+.active {
+  background-color: rgb(101, 204, 245) !important;
+  border-radius: 10%;
+}
